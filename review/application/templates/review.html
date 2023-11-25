@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block content %}
+    
+    <div class="col-sm-10 ml-auto mr-auto ">
+        <h2>Reviews History</h2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Quality</th>
+                    <th scope="col">Shipping Time</th>
+                    <th scope="col">Shipping Quality</th>
+                    <th scope="col">Contact with seller</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                {% for d in data %}
+                    <tr>
+                        <td>{{ d.name }}</td>
+                        <td>{{ d.product_quality | safe }}</td>
+                        <td>{{ d.shipping_time | safe }}</td>
+                        <td>{{ d.shipping_quality | safe }}</td>
+                        <td>{{ d.contact_quality | safe }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

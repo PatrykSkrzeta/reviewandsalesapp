@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% block content %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviews Dashboard</title>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+
+<div class="d-flex flex-column align-items-center justify-content-center">
+    <h1>Reviews Dashboard</h1>
+     <canvas id="Reviews" width="600" height="600"></canvas>
+
+</div>
+
+<script>
+    var chartData = {{ chart_data | tojson | safe }};
+    var ctx = document.getElementById('Reviews').getContext('2d');
+    var Reviews = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: chartData.labels,
+            datasets: [{
+                label: 'Average Ratings',
+                data: chartData.data,
+                backgroundColor: function(context) {
+                    var value = context.dataset.data[context.dataIndex];
+                    return value < 3 ? 'rgba(255, 0, 0, 0.2)' : 'rgba(0, 255, 0, 0.2)';
+                },
+                borderColor: function(context) {
+                    var value = context.dataset.data[context.dataIndex];
+                    return value < 3 ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 255, 0, 1)';
+                },
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    max: 5,
+                    min: 1,
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}
